@@ -5,17 +5,75 @@
  */
 package flashcardapp;
 
+import java.io.BufferedReader;
+import java.io.IOException;
+import java.io.InputStream;
+import java.io.InputStreamReader;
+import java.nio.file.FileSystem;
+import java.nio.file.FileSystems;
+import java.nio.file.Files;
+import java.nio.file.Path;
+import java.util.ArrayList;
+import javax.swing.JOptionPane;
+
 /**
  *
  * @author jtw22
  */
-public class FlashCardGUI extends javax.swing.JFrame {
 
+
+public class FlashCardGUI extends javax.swing.JFrame {
+    FileSystem fs;
+    Path pathToFile;
+    InputStream FlashCardIn;
+    BufferedReader companyReader;
+    ArrayList<FlashCard> flashCardList = new ArrayList<FlashCard>();
+    int index = 0;
+    boolean flip = false; //false means the term side is shown.
+    
+    public void showCard(){
+        this.lblDisplay.setText(flashCardList.get(index).getTerm()); 
+        this.setTitle("Card #" + index + " of " + flashCardList.size());
+    }
+    
     /**
      * Creates new form FlashCardGUI
      */
     public FlashCardGUI() {
         initComponents();
+        
+        fs = FileSystems.getDefault();
+        pathToFile = fs.getPath("C:\\Users\\jtw22\\Documents\\GitHub\\FlashCardProject\\FlashCardSampleData.txt");
+        FlashCard aFlashCard;         //rename^ this to access your own github folder 
+        String line ="";
+        
+        try {
+            FlashCardIn = Files.newInputStream(pathToFile);
+            companyReader = new BufferedReader(new InputStreamReader(FlashCardIn));
+            //read the file one line at a time
+            while((line = companyReader.readLine()) != null){
+                String records[] = line.split("=");
+                aFlashCard = new FlashCard();
+                
+                try {
+                    aFlashCard.setTerm(records[0]);
+                    aFlashCard.setAnswer(records[1]);
+                   
+                    
+                    flashCardList.add(aFlashCard);
+                } catch (NumberFormatException numberFormatException) {
+                    //ignore it
+                }//end of try catch
+            }//end of while
+            //test to see if it worked
+            //JOptionPane.showMessageDialog(this,"Records read " + contactList.size());
+           
+            FlashCardIn.close();
+        } catch (IOException ex) {
+            JOptionPane.showMessageDialog(this, "Cannot open Flash Card data\n" + ex.getMessage());
+            System.exit(2);
+        }
+        showCard();
     }
 
     /**
@@ -35,13 +93,37 @@ public class FlashCardGUI extends javax.swing.JFrame {
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
 
+        lblDisplay.setFont(new java.awt.Font("Times New Roman", 1, 24)); // NOI18N
+        lblDisplay.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
+        lblDisplay.setBorder(javax.swing.BorderFactory.createEtchedBorder());
+
         btnNext.setText("Next");
+        btnNext.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnNextActionPerformed(evt);
+            }
+        });
 
         btnSwitchToCreate.setText("Switch to Create ");
+        btnSwitchToCreate.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnSwitchToCreateActionPerformed(evt);
+            }
+        });
 
         btnPrevious.setText("Previous");
+        btnPrevious.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnPreviousActionPerformed(evt);
+            }
+        });
 
         btnFlip.setText("Flip Card");
+        btnFlip.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnFlipActionPerformed(evt);
+            }
+        });
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
@@ -68,9 +150,9 @@ public class FlashCardGUI extends javax.swing.JFrame {
                 .addGap(56, 56, 56)
                 .addComponent(lblDisplay, javax.swing.GroupLayout.PREFERRED_SIZE, 336, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addGap(18, 18, 18)
-                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(btnPrevious, javax.swing.GroupLayout.PREFERRED_SIZE, 86, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(btnNext, javax.swing.GroupLayout.PREFERRED_SIZE, 86, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addComponent(btnPrevious, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.PREFERRED_SIZE, 86, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(btnNext, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.PREFERRED_SIZE, 86, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(btnFlip, javax.swing.GroupLayout.PREFERRED_SIZE, 86, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                 .addComponent(btnSwitchToCreate, javax.swing.GroupLayout.PREFERRED_SIZE, 44, javax.swing.GroupLayout.PREFERRED_SIZE)
@@ -79,6 +161,41 @@ public class FlashCardGUI extends javax.swing.JFrame {
 
         pack();
     }// </editor-fold>//GEN-END:initComponents
+
+    private void btnNextActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnNextActionPerformed
+        // TODO add your handling code here:
+        if(index < flashCardList.size()){
+            flip = false;
+            index++;
+            showCard(); //updates form so that a new card is displayed
+        }
+    }//GEN-LAST:event_btnNextActionPerformed
+
+    private void btnPreviousActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnPreviousActionPerformed
+        // TODO add your handling code here:
+        if(index > 0){
+            flip = false;
+            index--;
+            showCard();// updates form so that a new card is displayed
+        }
+    }//GEN-LAST:event_btnPreviousActionPerformed
+
+    private void btnFlipActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnFlipActionPerformed
+        // TODO add your handling code here:
+        if(flip){
+             this.lblDisplay.setText(flashCardList.get(index).getTerm());
+             flip = false;
+        }
+        else{
+             this.lblDisplay.setText(flashCardList.get(index).getAnswer());
+             flip = true;
+        }
+        
+    }//GEN-LAST:event_btnFlipActionPerformed
+
+    private void btnSwitchToCreateActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnSwitchToCreateActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_btnSwitchToCreateActionPerformed
 
     /**
      * @param args the command line arguments
