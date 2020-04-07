@@ -47,6 +47,11 @@ public class CreateFlashCardsGUI extends javax.swing.JFrame {
 
         btnAddToFile1.setFont(new java.awt.Font("Dialog", 1, 14)); // NOI18N
         btnAddToFile1.setText("Add flashcard to file");
+        btnAddToFile1.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnAddToFile1ActionPerformed(evt);
+            }
+        });
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
@@ -91,6 +96,10 @@ public class CreateFlashCardsGUI extends javax.swing.JFrame {
 
         pack();
     }// </editor-fold>//GEN-END:initComponents
+
+    private void btnAddToFile1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnAddToFile1ActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_btnAddToFile1ActionPerformed
 
     /**
      * @param args the command line arguments

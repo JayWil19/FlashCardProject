@@ -14,6 +14,7 @@ import java.nio.file.FileSystems;
 import java.nio.file.Files;
 import java.nio.file.Path;
 import java.util.ArrayList;
+import java.util.Collections;
 import javax.swing.JOptionPane;
 
 /**
@@ -32,6 +33,7 @@ public class FlashCardGUI extends javax.swing.JFrame {
     boolean flip = false; //false means the term side is shown.
     
     public void showCard(){
+        Collections.shuffle(flashCardList);
         this.lblDisplay.setText(flashCardList.get(index).getTerm()); 
         this.setTitle("Card #" + index + " of " + flashCardList.size());
     }
@@ -43,7 +45,7 @@ public class FlashCardGUI extends javax.swing.JFrame {
         initComponents();
         
         fs = FileSystems.getDefault();
-        pathToFile = fs.getPath("C:\\Users\\jtw22\\Documents\\GitHub\\FlashCardProject\\FlashCardSampleData.txt");
+        pathToFile = fs.getPath("C:\\Users\\lonel\\Documents\\GitHub\\FlashCardProject\\FlashCardSampleData.txt");
         FlashCard aFlashCard;         //rename^ this to access your own github folder 
         String line ="";
         
