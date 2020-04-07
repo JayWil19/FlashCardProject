@@ -148,12 +148,11 @@
         </Property>
         <Property name="text" type="java.lang.String" value="SAVE"/>
       </Properties>
-<<<<<<< Updated upstream
-=======
+
       <Events>
         <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="btnSaveActionPerformed"/>
       </Events>
->>>>>>> Stashed changes
+
     </Component>
   </SubComponents>
 </Form>
