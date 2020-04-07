@@ -33,7 +33,6 @@ public class FlashCardGUI extends javax.swing.JFrame {
     boolean flip = false; //false means the term side is shown.
     
     public void showCard(){
-        Collections.shuffle(flashCardList);
         this.lblDisplay.setText(flashCardList.get(index).getTerm()); 
         this.setTitle("Card #" + index + " of " + flashCardList.size());
     }
@@ -75,6 +74,7 @@ public class FlashCardGUI extends javax.swing.JFrame {
             JOptionPane.showMessageDialog(this, "Cannot open Flash Card data\n" + ex.getMessage());
             System.exit(2);
         }
+        Collections.shuffle(flashCardList);
         showCard();
     }
 
@@ -95,10 +95,14 @@ public class FlashCardGUI extends javax.swing.JFrame {
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
 
+        lblDisplay.setBackground(new java.awt.Color(0, 0, 0));
         lblDisplay.setFont(new java.awt.Font("Times New Roman", 1, 24)); // NOI18N
+        lblDisplay.setForeground(new java.awt.Color(252, 3, 48));
         lblDisplay.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
         lblDisplay.setBorder(javax.swing.BorderFactory.createEtchedBorder());
 
+        btnNext.setBackground(new java.awt.Color(0, 0, 0));
+        btnNext.setForeground(new java.awt.Color(252, 3, 48));
         btnNext.setText("Next");
         btnNext.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
@@ -106,6 +110,8 @@ public class FlashCardGUI extends javax.swing.JFrame {
             }
         });
 
+        btnSwitchToCreate.setBackground(new java.awt.Color(0, 0, 0));
+        btnSwitchToCreate.setForeground(new java.awt.Color(252, 3, 48));
         btnSwitchToCreate.setText("Switch to Create ");
         btnSwitchToCreate.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
@@ -113,6 +119,8 @@ public class FlashCardGUI extends javax.swing.JFrame {
             }
         });
 
+        btnPrevious.setBackground(new java.awt.Color(0, 0, 0));
+        btnPrevious.setForeground(new java.awt.Color(252, 3, 48));
         btnPrevious.setText("Previous");
         btnPrevious.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
@@ -120,6 +128,8 @@ public class FlashCardGUI extends javax.swing.JFrame {
             }
         });
 
+        btnFlip.setBackground(new java.awt.Color(0, 0, 0));
+        btnFlip.setForeground(new java.awt.Color(252, 3, 48));
         btnFlip.setText("Flip Card");
         btnFlip.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
