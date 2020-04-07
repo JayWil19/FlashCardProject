@@ -50,27 +50,13 @@ public class CreateFlashCardsGUI extends javax.swing.JFrame {
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
         setName("CreateCards"); // NOI18N
 
-        txtAnswer.setForeground(new java.awt.Color(252, 3, 48));
-
-        txtTerm.setForeground(new java.awt.Color(252, 3, 48));
-
         jLabel1.setFont(new java.awt.Font("Dialog", 1, 18)); // NOI18N
-        jLabel1.setForeground(new java.awt.Color(252, 3, 48));
         jLabel1.setText("Enter the definition or answer:");
 
         jLabel2.setFont(new java.awt.Font("Dialog", 1, 18)); // NOI18N
-
         jLabel2.setText("Enter the name of the file:");
 
         btnSwitchToReview.setFont(new java.awt.Font("Dialog", 1, 18)); // NOI18N
-
-        jLabel2.setForeground(new java.awt.Color(252, 3, 48));
-        jLabel2.setText("Enter a term or question:");
-
-        btnSwitchToReview.setBackground(new java.awt.Color(0, 0, 0));
-        btnSwitchToReview.setFont(new java.awt.Font("Dialog", 1, 14)); // NOI18N
-        btnSwitchToReview.setForeground(new java.awt.Color(252, 3, 48));
-
         btnSwitchToReview.setText("Switch to Review");
         btnSwitchToReview.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
@@ -78,11 +64,10 @@ public class CreateFlashCardsGUI extends javax.swing.JFrame {
             }
         });
 
-        btnAddToFile1.setBackground(new java.awt.Color(0, 0, 0));
+<<<<<<< Updated upstream
         btnAddToFile1.setFont(new java.awt.Font("Dialog", 1, 14)); // NOI18N
-        btnAddToFile1.setForeground(new java.awt.Color(252, 3, 48));
         btnAddToFile1.setText("Add flashcard to file");
-
+=======
         btnAddFlashCard.setFont(new java.awt.Font("Dialog", 1, 18)); // NOI18N
         btnAddFlashCard.setText("Add flashcard");
         btnAddFlashCard.addActionListener(new java.awt.event.ActionListener() {
@@ -101,6 +86,7 @@ public class CreateFlashCardsGUI extends javax.swing.JFrame {
                 btnSaveActionPerformed(evt);
             }
         });
+>>>>>>> Stashed changes
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
@@ -157,6 +143,8 @@ public class CreateFlashCardsGUI extends javax.swing.JFrame {
         pack();
     }// </editor-fold>//GEN-END:initComponents
 
+<<<<<<< Updated upstream
+=======
     private void btnAddFlashCardActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnAddFlashCardActionPerformed
         // TODO add your handling code here:
         btnSave.setEnabled(true);// theres at least one card in there that can be saved
@@ -221,7 +209,7 @@ public class CreateFlashCardsGUI extends javax.swing.JFrame {
         this.setTitle("Cards Unsaved: " + cards.size());
     }//GEN-LAST:event_btnSaveActionPerformed
 
-
+>>>>>>> Stashed changes
     /**
      * @param args the command line arguments
      */

@@ -14,7 +14,6 @@ import java.nio.file.FileSystems;
 import java.nio.file.Files;
 import java.nio.file.Path;
 import java.util.ArrayList;
-import java.util.Collections;
 import javax.swing.JOptionPane;
 
 /**
@@ -38,11 +37,14 @@ public class FlashCardGUI extends javax.swing.JFrame {
                              //rename ^ this to access your own github folder 
     //display the card on form
     public void showCard(){
+<<<<<<< Updated upstream
         this.lblDisplay.setText(flashCardList.get(index).getTerm()); 
         this.setTitle("Card #" + index + " of " + flashCardList.size());
+=======
         currentCard = flashCardList.get(index);
         this.lblDisplay.setText(currentCard.getTerm()); 
         this.setTitle("Card #" + (index+1) + " of " + (flashCardList.size()));
+>>>>>>> Stashed changes
     }
     
     /**
@@ -51,13 +53,16 @@ public class FlashCardGUI extends javax.swing.JFrame {
     public void getFile(String path){
         flashCards = new ArrayList<FlashCard>();
         fs = FileSystems.getDefault();
-        pathToFile = fs.getPath("C:\\Users\\lonel\\Documents\\GitHub\\FlashCardProject\\FlashCardSampleData.txt");
+<<<<<<< Updated upstream
+        pathToFile = fs.getPath("C:\\Users\\jtw22\\Documents\\GitHub\\FlashCardProject\\FlashCardSampleData.txt");
         FlashCard aFlashCard;         //rename^ this to access your own github folder 
+=======
         if(path.trim().isEmpty()) //failsafe so that if the get button is pressed while txt field is empty
             pathToFile = fs.getPath(defaultPath);//the default path will be used
         else
             pathToFile = fs.getPath(path);
         FlashCard aFlashCard;
+>>>>>>> Stashed changes
         String line ="";
         
         try {
@@ -129,18 +134,11 @@ public class FlashCardGUI extends javax.swing.JFrame {
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
         setName("ReviewCards"); // NOI18N
 
-        lblDisplay.setBackground(new java.awt.Color(0, 0, 0));
         lblDisplay.setFont(new java.awt.Font("Times New Roman", 1, 24)); // NOI18N
-        lblDisplay.setForeground(new java.awt.Color(252, 3, 48));
         lblDisplay.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
         lblDisplay.setBorder(javax.swing.BorderFactory.createEtchedBorder());
 
-
         btnNext.setFont(new java.awt.Font("Dialog", 1, 18)); // NOI18N
-
-        btnNext.setBackground(new java.awt.Color(0, 0, 0));
-        btnNext.setForeground(new java.awt.Color(252, 3, 48));
-
         btnNext.setText("Next");
         btnNext.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
@@ -148,11 +146,7 @@ public class FlashCardGUI extends javax.swing.JFrame {
             }
         });
 
-
         btnSwitchToCreate.setFont(new java.awt.Font("Dialog", 1, 18)); // NOI18N
-
-        btnSwitchToCreate.setBackground(new java.awt.Color(0, 0, 0));
-        btnSwitchToCreate.setForeground(new java.awt.Color(252, 3, 48));
         btnSwitchToCreate.setText("Switch to Create ");
         btnSwitchToCreate.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
@@ -160,12 +154,7 @@ public class FlashCardGUI extends javax.swing.JFrame {
             }
         });
 
-
         btnPrevious.setFont(new java.awt.Font("Dialog", 1, 18)); // NOI18N
-
-        btnPrevious.setBackground(new java.awt.Color(0, 0, 0));
-        btnPrevious.setForeground(new java.awt.Color(252, 3, 48));
-
         btnPrevious.setText("Previous");
         btnPrevious.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
@@ -174,10 +163,6 @@ public class FlashCardGUI extends javax.swing.JFrame {
         });
 
         btnFlip.setFont(new java.awt.Font("Dialog", 1, 18)); // NOI18N
-
-        btnFlip.setBackground(new java.awt.Color(0, 0, 0));
-        btnFlip.setForeground(new java.awt.Color(252, 3, 48));
-
         btnFlip.setText("Flip Card");
         btnFlip.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
