@@ -27,24 +27,36 @@ public class FlashCardGUI extends javax.swing.JFrame {
     Path pathToFile;
     InputStream FlashCardIn;
     BufferedReader companyReader;
-    ArrayList<FlashCard> flashCardList = new ArrayList<FlashCard>();
+    ArrayList<FlashCard> flashCardList = new ArrayList<FlashCard>();//the list that holds whatever list of cards
+    ArrayList<FlashCard> flashCards;//the cards from the file
     int index = 0;
     boolean flip = false; //false means the term side is shown.
-    
+    FlashCard currentCard; //the card that is currently displayed
+    ArrayList<FlashCard> revisitCards = new ArrayList<FlashCard>();//cards the user wants to revisit
+    String defaultPath ="C:\\Users\\jtw22\\Documents\\GitHub\\FlashCardProject\\FlashCardSampleData.txt";//the default path
+                             //rename ^ this to access your own github folder 
+    //display the card on form
     public void showCard(){
         this.lblDisplay.setText(flashCardList.get(index).getTerm()); 
         this.setTitle("Card #" + index + " of " + flashCardList.size());
+        currentCard = flashCardList.get(index);
+        this.lblDisplay.setText(currentCard.getTerm()); 
+        this.setTitle("Card #" + (index+1) + " of " + (flashCardList.size()));
     }
     
     /**
      * Creates new form FlashCardGUI
      */
-    public FlashCardGUI() {
-        initComponents();
-        
+    public void getFile(String path){
+        flashCards = new ArrayList<FlashCard>();
         fs = FileSystems.getDefault();
         pathToFile = fs.getPath("C:\\Users\\jtw22\\Documents\\GitHub\\FlashCardProject\\FlashCardSampleData.txt");
         FlashCard aFlashCard;         //rename^ this to access your own github folder 
+        if(path.trim().isEmpty()) //failsafe so that if the get button is pressed while txt field is empty
+            pathToFile = fs.getPath(defaultPath);//the default path will be used
+        else
+            pathToFile = fs.getPath(path);
+        FlashCard aFlashCard;
         String line ="";
         
         try {
@@ -60,7 +72,7 @@ public class FlashCardGUI extends javax.swing.JFrame {
                     aFlashCard.setAnswer(records[1]);
                    
                     
-                    flashCardList.add(aFlashCard);
+                    flashCards.add(aFlashCard);
                 } catch (NumberFormatException numberFormatException) {
                     //ignore it
                 }//end of try catch
@@ -69,11 +81,28 @@ public class FlashCardGUI extends javax.swing.JFrame {
             //JOptionPane.showMessageDialog(this,"Records read " + contactList.size());
            
             FlashCardIn.close();
+            setCards();
         } catch (IOException ex) {
-            JOptionPane.showMessageDialog(this, "Cannot open Flash Card data\n" + ex.getMessage());
-            System.exit(2);
+            JOptionPane.showMessageDialog(this, "Cannot open Flash Card data \n" + ex.getMessage());
+            getFile(defaultPath);
         }
+        
+    }
+    
+    public void setCards(){
+        //sets the list to whatever cards were sent in
+        flashCardList = flashCards;
+        Collections.shuffle(flashCardList);
         showCard();
+    }
+    
+    public FlashCardGUI() {
+        initComponents();
+        btnPrevious.setEnabled(false); //these two buttons have no use when app first opens
+        tbtnRevisitAndAllCards.setEnabled(false);//and therefore should not be pressed
+        getFile(defaultPath);//default file
+                     
+        
     }
 
     /**
@@ -90,13 +119,20 @@ public class FlashCardGUI extends javax.swing.JFrame {
         btnSwitchToCreate = new javax.swing.JButton();
         btnPrevious = new javax.swing.JButton();
         btnFlip = new javax.swing.JButton();
+        chRevisit = new javax.swing.JCheckBox();
+        tbtnRevisitAndAllCards = new javax.swing.JToggleButton();
+        jLabel1 = new javax.swing.JLabel();
+        txtCustomFile = new javax.swing.JTextField();
+        btnFindAndGetFile = new javax.swing.JButton();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
+        setName("ReviewCards"); // NOI18N
 
         lblDisplay.setFont(new java.awt.Font("Times New Roman", 1, 24)); // NOI18N
         lblDisplay.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
         lblDisplay.setBorder(javax.swing.BorderFactory.createEtchedBorder());
 
+        btnNext.setFont(new java.awt.Font("Dialog", 1, 18)); // NOI18N
         btnNext.setText("Next");
         btnNext.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
@@ -104,6 +140,7 @@ public class FlashCardGUI extends javax.swing.JFrame {
             }
         });
 
+        btnSwitchToCreate.setFont(new java.awt.Font("Dialog", 1, 18)); // NOI18N
         btnSwitchToCreate.setText("Switch to Create ");
         btnSwitchToCreate.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
@@ -111,6 +148,7 @@ public class FlashCardGUI extends javax.swing.JFrame {
             }
         });
 
+        btnPrevious.setFont(new java.awt.Font("Dialog", 1, 18)); // NOI18N
         btnPrevious.setText("Previous");
         btnPrevious.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
@@ -118,10 +156,40 @@ public class FlashCardGUI extends javax.swing.JFrame {
             }
         });
 
+        btnFlip.setFont(new java.awt.Font("Dialog", 1, 18)); // NOI18N
         btnFlip.setText("Flip Card");
         btnFlip.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 btnFlipActionPerformed(evt);
+            }
+        });
+
+        chRevisit.setFont(new java.awt.Font("Dialog", 1, 18)); // NOI18N
+        chRevisit.setText("Revisit this card");
+        chRevisit.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                chRevisitActionPerformed(evt);
+            }
+        });
+
+        tbtnRevisitAndAllCards.setFont(new java.awt.Font("Dialog", 1, 18)); // NOI18N
+        tbtnRevisitAndAllCards.setText("Revisit");
+        tbtnRevisitAndAllCards.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                tbtnRevisitAndAllCardsActionPerformed(evt);
+            }
+        });
+
+        jLabel1.setFont(new java.awt.Font("Dialog", 1, 18)); // NOI18N
+        jLabel1.setText("Enter path to a FlashCard File:");
+
+        txtCustomFile.setFont(new java.awt.Font("Dialog", 0, 18)); // NOI18N
+
+        btnFindAndGetFile.setFont(new java.awt.Font("Dialog", 1, 18)); // NOI18N
+        btnFindAndGetFile.setText("Find and Get File");
+        btnFindAndGetFile.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnFindAndGetFileActionPerformed(evt);
             }
         });
 
@@ -130,33 +198,55 @@ public class FlashCardGUI extends javax.swing.JFrame {
         layout.setHorizontalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
-                .addContainerGap(72, Short.MAX_VALUE)
-                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING, false)
-                    .addComponent(lblDisplay, javax.swing.GroupLayout.PREFERRED_SIZE, 649, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
                     .addGroup(javax.swing.GroupLayout.Alignment.LEADING, layout.createSequentialGroup()
-                        .addComponent(btnPrevious, javax.swing.GroupLayout.PREFERRED_SIZE, 92, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addGap(120, 120, 120)
+                        .addGap(33, 33, 33)
+                        .addComponent(jLabel1)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                        .addComponent(txtCustomFile, javax.swing.GroupLayout.PREFERRED_SIZE, 304, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addGap(18, 18, 18)
+                        .addComponent(btnFindAndGetFile, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                    .addGroup(layout.createSequentialGroup()
+                        .addGap(58, 58, 58)
                         .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                            .addComponent(btnSwitchToCreate, javax.swing.GroupLayout.PREFERRED_SIZE, 224, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addComponent(lblDisplay, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                             .addGroup(layout.createSequentialGroup()
-                                .addComponent(btnFlip, javax.swing.GroupLayout.PREFERRED_SIZE, 224, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                                .addComponent(btnNext, javax.swing.GroupLayout.PREFERRED_SIZE, 92, javax.swing.GroupLayout.PREFERRED_SIZE)))))
+                                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                                    .addComponent(btnPrevious, javax.swing.GroupLayout.PREFERRED_SIZE, 92, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                    .addComponent(tbtnRevisitAndAllCards, javax.swing.GroupLayout.PREFERRED_SIZE, 161, javax.swing.GroupLayout.PREFERRED_SIZE))
+                                .addGap(51, 51, 51)
+                                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                                    .addGroup(layout.createSequentialGroup()
+                                        .addComponent(btnSwitchToCreate, javax.swing.GroupLayout.PREFERRED_SIZE, 224, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                                        .addComponent(chRevisit))
+                                    .addGroup(layout.createSequentialGroup()
+                                        .addComponent(btnFlip, javax.swing.GroupLayout.PREFERRED_SIZE, 224, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                                        .addComponent(btnNext, javax.swing.GroupLayout.PREFERRED_SIZE, 92, javax.swing.GroupLayout.PREFERRED_SIZE)))))))
                 .addGap(63, 63, 63))
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(layout.createSequentialGroup()
-                .addGap(56, 56, 56)
-                .addComponent(lblDisplay, javax.swing.GroupLayout.PREFERRED_SIZE, 336, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGap(24, 24, 24)
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
+                    .addComponent(jLabel1, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                    .addComponent(txtCustomFile)
+                    .addComponent(btnFindAndGetFile, javax.swing.GroupLayout.DEFAULT_SIZE, 87, Short.MAX_VALUE))
+                .addGap(16, 16, 16)
+                .addComponent(lblDisplay, javax.swing.GroupLayout.PREFERRED_SIZE, 275, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addGap(18, 18, 18)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addComponent(btnPrevious, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.PREFERRED_SIZE, 86, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(btnNext, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.PREFERRED_SIZE, 86, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(btnFlip, javax.swing.GroupLayout.PREFERRED_SIZE, 86, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                .addComponent(btnSwitchToCreate, javax.swing.GroupLayout.PREFERRED_SIZE, 44, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addContainerGap(15, Short.MAX_VALUE))
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(btnSwitchToCreate, javax.swing.GroupLayout.PREFERRED_SIZE, 44, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(chRevisit)
+                    .addComponent(tbtnRevisitAndAllCards, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                .addGap(15, 15, 15))
         );
 
         pack();
@@ -164,30 +254,47 @@ public class FlashCardGUI extends javax.swing.JFrame {
 
     private void btnNextActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnNextActionPerformed
         // TODO add your handling code here:
+        btnPrevious.setEnabled(true);
         if(index < flashCardList.size()){
+            chRevisit.setSelected(false);
             flip = false;
             index++;
             showCard(); //updates form so that a new card is displayed
+            isCheckedForRevisit();//if the card is in the revisitCards list, the check box is selected
+        }
+        if(index == flashCardList.size()-1 || index==flashCardList.size()){
+            btnNext.setEnabled(false);
         }
     }//GEN-LAST:event_btnNextActionPerformed
 
     private void btnPreviousActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnPreviousActionPerformed
         // TODO add your handling code here:
+        btnNext.setEnabled(true);
         if(index > 0){
+            chRevisit.setSelected(false);
             flip = false;
             index--;
             showCard();// updates form so that a new card is displayed
+            isCheckedForRevisit();//if the card is in the revisitCards list, the check box is selected
+        }
+        if(index ==0){
+            btnPrevious.setEnabled(false);
         }
     }//GEN-LAST:event_btnPreviousActionPerformed
-
+    public void isCheckedForRevisit(){
+        if(revisitCards.contains(currentCard)){
+            chRevisit.setSelected(true);
+        }
+    }
+    
     private void btnFlipActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnFlipActionPerformed
         // TODO add your handling code here:
         if(flip){
-             this.lblDisplay.setText(flashCardList.get(index).getTerm());
+             this.lblDisplay.setText(currentCard.getTerm());
              flip = false;
         }
         else{
-             this.lblDisplay.setText(flashCardList.get(index).getAnswer());
+             this.lblDisplay.setText("<html>"+currentCard.getAnswer()+"</html>");
              flip = true;
         }
         
@@ -195,7 +302,47 @@ public class FlashCardGUI extends javax.swing.JFrame {
 
     private void btnSwitchToCreateActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnSwitchToCreateActionPerformed
         // TODO add your handling code here:
+        new CreateFlashCardsGUI().setVisible(true);
+        this.setVisible(false);
     }//GEN-LAST:event_btnSwitchToCreateActionPerformed
+
+    private void chRevisitActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_chRevisitActionPerformed
+        // TODO add your handling code here:]
+        //adds the current card to the list to revisit if the user selects it
+        if(chRevisit.isSelected()){
+            revisitCards.add(currentCard);
+        }
+        else{
+            revisitCards.remove(currentCard);
+        }
+        if(revisitCards.size()==0){
+            tbtnRevisitAndAllCards.setEnabled(false);
+        }
+        else{
+            tbtnRevisitAndAllCards.setEnabled(true);
+        }
+    }//GEN-LAST:event_chRevisitActionPerformed
+
+    private void tbtnRevisitAndAllCardsActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_tbtnRevisitAndAllCardsActionPerformed
+        // TODO add your handling code here:
+        if(tbtnRevisitAndAllCards.isSelected()){
+            flashCardList = revisitCards;
+        }
+        else{
+            flashCardList = flashCards;
+        }
+        index = 0;
+        showCard();
+        isCheckedForRevisit();//if the card is in the revisitCards list, the check box is selected
+        btnNext.setEnabled(true);
+    }//GEN-LAST:event_tbtnRevisitAndAllCardsActionPerformed
+
+    private void btnFindAndGetFileActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnFindAndGetFileActionPerformed
+        // TODO add your handling code here:
+        index= 0;
+        String newPath = txtCustomFile.getText();
+        getFile(newPath);
+    }//GEN-LAST:event_btnFindAndGetFileActionPerformed
 
     /**
      * @param args the command line arguments
@@ -233,10 +380,15 @@ public class FlashCardGUI extends javax.swing.JFrame {
     }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
+    private javax.swing.JButton btnFindAndGetFile;
     private javax.swing.JButton btnFlip;
     private javax.swing.JButton btnNext;
     private javax.swing.JButton btnPrevious;
     private javax.swing.JButton btnSwitchToCreate;
+    private javax.swing.JCheckBox chRevisit;
+    private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel lblDisplay;
+    private javax.swing.JToggleButton tbtnRevisitAndAllCards;
+    private javax.swing.JTextField txtCustomFile;
     // End of variables declaration//GEN-END:variables
 }

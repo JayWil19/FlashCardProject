@@ -5,6 +5,13 @@
  */
 package flashcardapp;
 
+import java.io.FileOutputStream;
+import javax.swing.JFileChooser;
+import javax.swing.JOptionPane;
+import java.io.File;
+import java.io.FileWriter;
+import java.io.IOException;
+import java.util.ArrayList;
 /**
  *
  * @author jtw22
@@ -14,8 +21,11 @@ public class CreateFlashCardsGUI extends javax.swing.JFrame {
     /**
      * Creates new form CreateFlashCardsGUI
      */
+    ArrayList<FlashCard> cards = new ArrayList<FlashCard>();// the cards being sent to a file
     public CreateFlashCardsGUI() {
         initComponents();
+        btnSave.setEnabled(false);//nothing to save at this point
+        this.setTitle("Cards Unsaved: " + cards.size());
     }
 
     /**
@@ -28,69 +38,171 @@ public class CreateFlashCardsGUI extends javax.swing.JFrame {
     private void initComponents() {
 
         txtAnswer = new javax.swing.JTextField();
-        txtTerm = new javax.swing.JTextField();
+        txtFileName = new javax.swing.JTextField();
         jLabel1 = new javax.swing.JLabel();
         jLabel2 = new javax.swing.JLabel();
         btnSwitchToReview = new javax.swing.JButton();
-        btnAddToFile1 = new javax.swing.JButton();
+        btnAddFlashCard = new javax.swing.JButton();
+        jLabel3 = new javax.swing.JLabel();
+        txtTerm1 = new javax.swing.JTextField();
+        btnSave = new javax.swing.JButton();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
+        setName("CreateCards"); // NOI18N
 
         jLabel1.setFont(new java.awt.Font("Dialog", 1, 18)); // NOI18N
         jLabel1.setText("Enter the definition or answer:");
 
         jLabel2.setFont(new java.awt.Font("Dialog", 1, 18)); // NOI18N
-        jLabel2.setText("Enter a term or question:");
+        jLabel2.setText("Enter the name of the file:");
 
-        btnSwitchToReview.setFont(new java.awt.Font("Dialog", 1, 14)); // NOI18N
+        btnSwitchToReview.setFont(new java.awt.Font("Dialog", 1, 18)); // NOI18N
         btnSwitchToReview.setText("Switch to Review");
+        btnSwitchToReview.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnSwitchToReviewActionPerformed(evt);
+            }
+        });
 
         btnAddToFile1.setFont(new java.awt.Font("Dialog", 1, 14)); // NOI18N
         btnAddToFile1.setText("Add flashcard to file");
+        btnAddFlashCard.setFont(new java.awt.Font("Dialog", 1, 18)); // NOI18N
+        btnAddFlashCard.setText("Add flashcard");
+        btnAddFlashCard.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnAddFlashCardActionPerformed(evt);
+            }
+        });
+
+        jLabel3.setFont(new java.awt.Font("Dialog", 1, 18)); // NOI18N
+        jLabel3.setText("Enter a term or question:");
+
+        btnSave.setFont(new java.awt.Font("Dialog", 1, 18)); // NOI18N
+        btnSave.setText("SAVE");
+        btnSave.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnSaveActionPerformed(evt);
+            }
+        });
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
         layout.setHorizontalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(layout.createSequentialGroup()
-                .addContainerGap()
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING, false)
-                    .addGroup(layout.createSequentialGroup()
-                        .addComponent(jLabel2, javax.swing.GroupLayout.PREFERRED_SIZE, 237, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addGroup(javax.swing.GroupLayout.Alignment.LEADING, layout.createSequentialGroup()
+                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                            .addComponent(jLabel2, javax.swing.GroupLayout.PREFERRED_SIZE, 237, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addComponent(jLabel3, javax.swing.GroupLayout.PREFERRED_SIZE, 237, javax.swing.GroupLayout.PREFERRED_SIZE))
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                        .addComponent(txtTerm, javax.swing.GroupLayout.PREFERRED_SIZE, 500, javax.swing.GroupLayout.PREFERRED_SIZE))
-                    .addGroup(layout.createSequentialGroup()
+                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                            .addComponent(txtFileName, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.PREFERRED_SIZE, 500, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addComponent(txtTerm1, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.PREFERRED_SIZE, 500, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                    .addGroup(javax.swing.GroupLayout.Alignment.LEADING, layout.createSequentialGroup()
+                        .addContainerGap()
                         .addComponent(jLabel1)
                         .addGap(18, 18, 18)
-                        .addComponent(txtAnswer, javax.swing.GroupLayout.PREFERRED_SIZE, 500, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
+                            .addGroup(layout.createSequentialGroup()
+                                .addComponent(btnSwitchToReview)
+                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                                .addComponent(btnAddFlashCard)
+                                .addGap(18, 18, 18)
+                                .addComponent(btnSave, javax.swing.GroupLayout.PREFERRED_SIZE, 130, javax.swing.GroupLayout.PREFERRED_SIZE))
+                            .addComponent(txtAnswer, javax.swing.GroupLayout.PREFERRED_SIZE, 500, javax.swing.GroupLayout.PREFERRED_SIZE))))
                 .addContainerGap(72, Short.MAX_VALUE))
-            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
-                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                .addComponent(btnSwitchToReview)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(btnAddToFile1)
-                .addGap(73, 73, 73))
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
-                .addContainerGap(120, Short.MAX_VALUE)
-                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addComponent(txtTerm, javax.swing.GroupLayout.PREFERRED_SIZE, 128, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGap(24, 24, 24)
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(txtFileName, javax.swing.GroupLayout.PREFERRED_SIZE, 49, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(jLabel2, javax.swing.GroupLayout.PREFERRED_SIZE, 89, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addGap(18, 18, 18)
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(txtTerm1, javax.swing.GroupLayout.PREFERRED_SIZE, 128, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(jLabel3, javax.swing.GroupLayout.PREFERRED_SIZE, 89, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 7, Short.MAX_VALUE)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addComponent(txtAnswer, javax.swing.GroupLayout.PREFERRED_SIZE, 128, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(jLabel1, javax.swing.GroupLayout.PREFERRED_SIZE, 89, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addGap(18, 18, 18)
-                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(btnSwitchToReview, javax.swing.GroupLayout.PREFERRED_SIZE, 52, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(btnAddToFile1, javax.swing.GroupLayout.PREFERRED_SIZE, 52, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addGap(59, 59, 59))
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addComponent(btnSave, javax.swing.GroupLayout.PREFERRED_SIZE, 52, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                        .addComponent(btnSwitchToReview, javax.swing.GroupLayout.PREFERRED_SIZE, 52, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addComponent(btnAddFlashCard, javax.swing.GroupLayout.PREFERRED_SIZE, 52, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                .addContainerGap(59, Short.MAX_VALUE))
         );
 
         pack();
     }// </editor-fold>//GEN-END:initComponents
+
+    private void btnAddFlashCardActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnAddFlashCardActionPerformed
+        // TODO add your handling code here:
+        btnSave.setEnabled(true);// theres at least one card in there that can be saved
+        cards.add(new FlashCard(txtTerm1.getText(),txtAnswer.getText()));
+        txtAnswer.setText("");
+        txtTerm1.setText("");
+        this.setTitle("Cards Unsaved: " + cards.size());
+    }//GEN-LAST:event_btnAddFlashCardActionPerformed
+
+    private void btnSwitchToReviewActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnSwitchToReviewActionPerformed
+        // TODO add your handling code here:
+        //if cards were created, prompts the user that if they are sure they want to leave it
+        //no cards created, then it just switches back
+        if(cards.size() > 0){
+            if(JOptionPane.showConfirmDialog(this,"There is unsaved cards. Are you sure you want to switch?",
+                    "Warning",JOptionPane.YES_NO_OPTION)==JOptionPane.YES_OPTION){
+                new FlashCardGUI().setVisible(true);
+                this.setVisible(false);
+            }
+        }
+        else{
+            new FlashCardGUI().setVisible(true);
+            this.setVisible(false);
+        }
+    }//GEN-LAST:event_btnSwitchToReviewActionPerformed
+
+    private void btnSaveActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnSaveActionPerformed
+        // TODO add your handling code here:
+        String outputLine ="";
+        try{
+            String fileName = txtFileName.getText() + ".txt";
+            File saveFile = new File(fileName);
+            
+            
+            JFileChooser save = new JFileChooser();
+            save.setSelectedFile(saveFile);
+            int button = save.showSaveDialog(this); //holds onto the button pressed
+            if(button ==JFileChooser.APPROVE_OPTION){
+                //clicked save
+                fileName = save.getSelectedFile().toString();
+                //fullpath
+                //FileOutputStream cardSave = new FileOutputStream(fileName);
+                saveFile = new File(fileName);
+                FileWriter cardWrite = new FileWriter(saveFile);
+                   for(int x = 0; x <cards.size();x++){
+                    outputLine=String.format("%s = %s\n", 
+                        cards.get(x).getTerm(),cards.get(x).getAnswer());
+                    cardWrite.write(outputLine); //writes to disk
+            }
+                
+                cardWrite.flush();
+                cardWrite.close();
+            }
+            else{
+                //clicked cancel
+            }
+            
+        }catch(Exception e){
+            JOptionPane.showMessageDialog(this,"Flash Cards Save failed " + e.toString());
+        }
+        cards.removeAll(cards);
+        this.setTitle("Cards Unsaved: " + cards.size());
+    }//GEN-LAST:event_btnSaveActionPerformed
 
     /**
      * @param args the command line arguments
@@ -128,11 +240,14 @@ public class CreateFlashCardsGUI extends javax.swing.JFrame {
     }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
-    private javax.swing.JButton btnAddToFile1;
+    private javax.swing.JButton btnAddFlashCard;
+    private javax.swing.JButton btnSave;
     private javax.swing.JButton btnSwitchToReview;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel2;
+    private javax.swing.JLabel jLabel3;
     private javax.swing.JTextField txtAnswer;
-    private javax.swing.JTextField txtTerm;
+    private javax.swing.JTextField txtFileName;
+    private javax.swing.JTextField txtTerm1;
     // End of variables declaration//GEN-END:variables
 }
