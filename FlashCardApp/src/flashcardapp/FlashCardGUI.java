@@ -37,14 +37,11 @@ public class FlashCardGUI extends javax.swing.JFrame {
                              //rename ^ this to access your own github folder 
     //display the card on form
     public void showCard(){
-<<<<<<< Updated upstream
-        this.lblDisplay.setText(flashCardList.get(index).getTerm()); 
-        this.setTitle("Card #" + index + " of " + flashCardList.size());
-=======
+
         currentCard = flashCardList.get(index);
         this.lblDisplay.setText(currentCard.getTerm()); 
         this.setTitle("Card #" + (index+1) + " of " + (flashCardList.size()));
->>>>>>> Stashed changes
+
     }
     
     /**
@@ -53,16 +50,13 @@ public class FlashCardGUI extends javax.swing.JFrame {
     public void getFile(String path){
         flashCards = new ArrayList<FlashCard>();
         fs = FileSystems.getDefault();
-<<<<<<< Updated upstream
-        pathToFile = fs.getPath("C:\\Users\\jtw22\\Documents\\GitHub\\FlashCardProject\\FlashCardSampleData.txt");
-        FlashCard aFlashCard;         //rename^ this to access your own github folder 
-=======
+
         if(path.trim().isEmpty()) //failsafe so that if the get button is pressed while txt field is empty
             pathToFile = fs.getPath(defaultPath);//the default path will be used
         else
             pathToFile = fs.getPath(path);
         FlashCard aFlashCard;
->>>>>>> Stashed changes
+
         String line ="";
         
         try {
