@@ -130,10 +130,13 @@ public class FlashCardGUI extends javax.swing.JFrame {
         setName("ReviewCards"); // NOI18N
 
         lblDisplay.setFont(new java.awt.Font("Times New Roman", 1, 24)); // NOI18N
+        lblDisplay.setForeground(new java.awt.Color(252, 3, 48));
         lblDisplay.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
         lblDisplay.setBorder(javax.swing.BorderFactory.createEtchedBorder());
 
+        btnNext.setBackground(new java.awt.Color(0, 0, 0));
         btnNext.setFont(new java.awt.Font("Dialog", 1, 18)); // NOI18N
+        btnNext.setForeground(new java.awt.Color(252, 3, 48));
         btnNext.setText("Next");
         btnNext.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
@@ -141,7 +144,9 @@ public class FlashCardGUI extends javax.swing.JFrame {
             }
         });
 
+        btnSwitchToCreate.setBackground(new java.awt.Color(0, 0, 0));
         btnSwitchToCreate.setFont(new java.awt.Font("Dialog", 1, 18)); // NOI18N
+        btnSwitchToCreate.setForeground(new java.awt.Color(252, 3, 48));
         btnSwitchToCreate.setText("Switch to Create ");
         btnSwitchToCreate.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
@@ -149,7 +154,9 @@ public class FlashCardGUI extends javax.swing.JFrame {
             }
         });
 
+        btnPrevious.setBackground(new java.awt.Color(0, 0, 0));
         btnPrevious.setFont(new java.awt.Font("Dialog", 1, 18)); // NOI18N
+        btnPrevious.setForeground(new java.awt.Color(252, 3, 48));
         btnPrevious.setText("Previous");
         btnPrevious.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
@@ -157,7 +164,9 @@ public class FlashCardGUI extends javax.swing.JFrame {
             }
         });
 
+        btnFlip.setBackground(new java.awt.Color(0, 0, 0));
         btnFlip.setFont(new java.awt.Font("Dialog", 1, 18)); // NOI18N
+        btnFlip.setForeground(new java.awt.Color(252, 3, 48));
         btnFlip.setText("Flip Card");
         btnFlip.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
@@ -166,6 +175,7 @@ public class FlashCardGUI extends javax.swing.JFrame {
         });
 
         chRevisit.setFont(new java.awt.Font("Dialog", 1, 18)); // NOI18N
+        chRevisit.setForeground(new java.awt.Color(252, 3, 48));
         chRevisit.setText("Revisit this card");
         chRevisit.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
@@ -173,7 +183,9 @@ public class FlashCardGUI extends javax.swing.JFrame {
             }
         });
 
+        tbtnRevisitAndAllCards.setBackground(new java.awt.Color(0, 0, 0));
         tbtnRevisitAndAllCards.setFont(new java.awt.Font("Dialog", 1, 18)); // NOI18N
+        tbtnRevisitAndAllCards.setForeground(new java.awt.Color(252, 3, 48));
         tbtnRevisitAndAllCards.setText("Revisit");
         tbtnRevisitAndAllCards.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
@@ -182,11 +194,14 @@ public class FlashCardGUI extends javax.swing.JFrame {
         });
 
         jLabel1.setFont(new java.awt.Font("Dialog", 1, 18)); // NOI18N
+        jLabel1.setForeground(new java.awt.Color(252, 3, 48));
         jLabel1.setText("Enter path to a FlashCard File:");
 
         txtCustomFile.setFont(new java.awt.Font("Dialog", 0, 18)); // NOI18N
 
+        btnFindAndGetFile.setBackground(new java.awt.Color(0, 0, 0));
         btnFindAndGetFile.setFont(new java.awt.Font("Dialog", 1, 18)); // NOI18N
+        btnFindAndGetFile.setForeground(new java.awt.Color(252, 3, 48));
         btnFindAndGetFile.setText("Find and Get File");
         btnFindAndGetFile.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {

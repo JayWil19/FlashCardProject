@@ -50,13 +50,21 @@ public class CreateFlashCardsGUI extends javax.swing.JFrame {
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
         setName("CreateCards"); // NOI18N
 
+        txtAnswer.setForeground(new java.awt.Color(252, 3, 48));
+
+        txtFileName.setForeground(new java.awt.Color(252, 3, 48));
+
         jLabel1.setFont(new java.awt.Font("Dialog", 1, 18)); // NOI18N
+        jLabel1.setForeground(new java.awt.Color(252, 3, 48));
         jLabel1.setText("Enter the definition or answer:");
 
         jLabel2.setFont(new java.awt.Font("Dialog", 1, 18)); // NOI18N
+        jLabel2.setForeground(new java.awt.Color(252, 3, 48));
         jLabel2.setText("Enter the name of the file:");
 
+        btnSwitchToReview.setBackground(new java.awt.Color(0, 0, 0));
         btnSwitchToReview.setFont(new java.awt.Font("Dialog", 1, 18)); // NOI18N
+        btnSwitchToReview.setForeground(new java.awt.Color(252, 3, 48));
         btnSwitchToReview.setText("Switch to Review");
         btnSwitchToReview.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
@@ -64,8 +72,9 @@ public class CreateFlashCardsGUI extends javax.swing.JFrame {
             }
         });
 
-
+        btnAddFlashCard.setBackground(new java.awt.Color(0, 0, 0));
         btnAddFlashCard.setFont(new java.awt.Font("Dialog", 1, 18)); // NOI18N
+        btnAddFlashCard.setForeground(new java.awt.Color(252, 3, 48));
         btnAddFlashCard.setText("Add flashcard");
         btnAddFlashCard.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
@@ -74,9 +83,14 @@ public class CreateFlashCardsGUI extends javax.swing.JFrame {
         });
 
         jLabel3.setFont(new java.awt.Font("Dialog", 1, 18)); // NOI18N
+        jLabel3.setForeground(new java.awt.Color(252, 3, 48));
         jLabel3.setText("Enter a term or question:");
 
+        txtTerm1.setForeground(new java.awt.Color(252, 3, 48));
+
+        btnSave.setBackground(new java.awt.Color(0, 0, 0));
         btnSave.setFont(new java.awt.Font("Dialog", 1, 18)); // NOI18N
+        btnSave.setForeground(new java.awt.Color(252, 3, 48));
         btnSave.setText("SAVE");
         btnSave.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
