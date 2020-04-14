@@ -50,6 +50,7 @@ public class CreateFlashCardsGUI extends javax.swing.JFrame {
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
         setName("CreateCards"); // NOI18N
 
+        txtAnswer.setFont(new java.awt.Font("Dialog", 0, 18)); // NOI18N
         txtAnswer.setForeground(new java.awt.Color(252, 3, 48));
 
         txtFileName.setForeground(new java.awt.Color(252, 3, 48));
@@ -86,6 +87,7 @@ public class CreateFlashCardsGUI extends javax.swing.JFrame {
         jLabel3.setForeground(new java.awt.Color(252, 3, 48));
         jLabel3.setText("Enter a term or question:");
 
+        txtTerm1.setFont(new java.awt.Font("Dialog", 0, 18)); // NOI18N
         txtTerm1.setForeground(new java.awt.Color(252, 3, 48));
 
         btnSave.setBackground(new java.awt.Color(0, 0, 0));
